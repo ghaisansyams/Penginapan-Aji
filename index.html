@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penginapan Aji - Sewa Tempat di Indonesia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        airbnb: '#FF385C',
+                        'airbnb-dark': '#E31C5F',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .card-hover { transition: all 300ms ease; }
+        .card-hover:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .nav-link { transition: color 300ms ease; }
+        .nav-link:hover { color: #FF385C; }
+        .facility-card { transition: all 300ms ease; }
+        .facility-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-color: #FFCDD6 !important; transform: translateY(-2px); }
+        .row-hover:hover { background-color: #fef9fa; }
+        #mobile-menu { display: none; }
+        #mobile-menu.open { display: block; }
+        .stat-card { transition: all 300ms ease; }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(255,56,92,0.1); }
+        .dest-card:hover img { transform: scale(1.1); }
+        .dest-card img { transition: transform 400ms ease; }
+        .tab-btn.active { background-color: #FF385C; color: white; }
+        .tab-btn { transition: all 200ms ease; }
+        input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    <!-- ===== NAVBAR ===== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-100 transition-shadow duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+
+                <!-- Logo -->
+                <a href="#home" class="flex items-center space-x-2 flex-shrink-0">
+                    <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 2C16 2 6 11.5 6 18.5C6 23.2 10.5 27 16 27C21.5 27 26 23.2 26 18.5C26 11.5 16 2 16 2Z" fill="#FF385C"/>
+                        <circle cx="16" cy="18" r="4" fill="white"/>
+                    </svg>
+                    <span class="text-xl font-bold" style="color:#FF385C">Penginapan Aji</span>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-600 font-medium text-sm">Home</a>
+                    <a href="#destinations" class="nav-link text-gray-600 font-medium text-sm">Destinations</a>
+                    <a href="#stays" class="nav-link text-gray-600 font-medium text-sm">Stays</a>
+                    <a href="#experiences" class="nav-link text-gray-600 font-medium text-sm">Experiences</a>
+                    <a href="#contact" class="nav-link text-gray-600 font-medium text-sm">Contact</a>
+                </div>
+
+                <!-- Auth Buttons (Desktop) -->
+                <div class="hidden md:flex items-center space-x-2">
+                    <button class="text-sm font-semibold text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-50 transition-colors">Login</button>
+                    <button class="text-sm font-semibold text-white px-5 py-2.5 rounded-xl transition-all hover:opacity-90 active:scale-95 shadow-sm" style="background-color:#FF385C">
+                        Sign Up
+                    </button>
+                </div>
+
+                <!-- Hamburger (Mobile) -->
+                <button id="hamburger-btn" class="md:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars text-gray-700 text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 px-4 py-5">
+            <div class="flex flex-col space-y-1">
+                <a href="#home" onclick="closeMenu()" class="text-gray-700 font-medium py-2.5 px-3 rounded-xl hover:bg-gray-50 hover:text-rose-500 transition-colors">Home</a>
+                <a href="#destinations" onclick="closeMenu()" class="text-gray-700 font-medium py-2.5 px-3 rounded-xl hover:bg-gray-50 hover:text-rose-500 transition-colors">Destinations</a>
+                <a href="#experiences" onclick="closeMenu()" class="text-gray-700 font-medium py-2.5 px-3 rounded-xl hover:bg-gray-50 hover:text-rose-500 transition-colors">Experiences</a>
+                <a href="#contact" onclick="closeMenu()" class="text-gray-700 font-medium py-2.5 px-3 rounded-xl hover:bg-gray-50 hover:text-rose-500 transition-colors">Contact</a>
+                <div class="flex space-x-3 pt-3">
+                    <button class="flex-1 text-sm font-semibold text-gray-700 border border-gray-300 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">Login</button>
+                    <button class="flex-1 text-sm font-semibold text-white px-4 py-3 rounded-xl hover:opacity-90 transition-all" style="background-color:#FF385C">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="pt-16 min-h-screen bg-gradient-to-br from-white via-rose-50/30 to-white flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+                <!-- Left: Search Card -->
+                <div class="order-2 lg:order-1 flex justify-center lg:justify-start">
+                    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
+                        <div class="mb-6">
+                            <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                                Sewa tempat<br>di <span style="color:#FF385C">Jawa</span>
+                            </h1>
+                            <p class="text-gray-400 text-sm mt-2">Temukan dan pesan akomodasi unik di Depok</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <!-- Lokasi -->
+                            <div class="border border-gray-200 rounded-2xl px-4 py-3 hover:border-rose-300 focus-within:border-rose-400 focus-within:ring-2 focus-within:ring-rose-50 transition-all">
+                                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Lokasi</label>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-location-dot text-rose-400 text-sm w-4"></i>
+                                    <input type="text" value="Depok, Indonesia" class="flex-1 text-sm text-gray-800 font-medium outline-none bg-transparent placeholder-gray-400" placeholder="Cari lokasi...">
+                                </div>
+                            </div>
+
+                            <!-- Check-in & Check-out -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="border border-gray-200 rounded-2xl px-4 py-3 hover:border-rose-300 focus-within:border-rose-400 transition-all">
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Check-in</label>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-regular fa-calendar text-rose-400 text-xs w-4"></i>
+                                        <input type="date" class="flex-1 text-xs text-gray-700 outline-none bg-transparent w-full">
+                                    </div>
+                                </div>
+                                <div class="border border-gray-200 rounded-2xl px-4 py-3 hover:border-rose-300 focus-within:border-rose-400 transition-all">
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Check-out</label>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-regular fa-calendar text-rose-400 text-xs w-4"></i>
+                                        <input type="date" class="flex-1 text-xs text-gray-700 outline-none bg-transparent w-full">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Jumlah Tamu -->
+                            <div class="border border-gray-200 rounded-2xl px-4 py-3 hover:border-rose-300 focus-within:border-rose-400 transition-all">
+                                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wide">Jumlah Tamu</label>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-users text-rose-400 text-sm w-4"></i>
+                                    <select class="flex-1 text-sm text-gray-700 font-medium outline-none bg-transparent cursor-pointer">
+                                        <option>1 tamu</option>
+                                        <option>2 tamu</option>
+                                        <option>3 tamu</option>
+                                        <option>4 tamu</option>
+                                        <option>5+ tamu</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <button class="w-full text-white font-bold py-4 rounded-2xl text-sm flex items-center justify-center space-x-2 transition-all hover:opacity-90 active:scale-[0.98] shadow-lg" style="background: linear-gradient(135deg, #FF385C, #E31C5F)">
+                                <i class="fa-solid fa-magnifying-glass text-base"></i>
+                                <span>Cari Penginapan</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Hero Image -->
+                <div class="order-1 lg:order-2 relative">
+                    <div class="relative overflow-hidden" style="border-radius:30px; box-shadow: 0 30px 80px rgba(0,0,0,0.2)">
+                        <img
+                            src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&q=85"
+                            alt="Beautiful property in Depok"
+                            class="w-full h-80 lg:h-[520px] object-cover"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                    </div>
+
+                    <!-- Floating Rating Badge -->
+                    <div class="absolute bottom-6 left-6 bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-star text-sm" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 font-medium">Rating Rata-rata</p>
+                            <p class="text-lg font-bold text-gray-800">4.8 / 5.0</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating Property Count Badge -->
+                    <div class="absolute top-6 right-6 bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-house text-sm" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 font-medium">Properti Tersedia</p>
+                            <p class="text-lg font-bold text-gray-800">1,060+</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURED DESTINATIONS ===== -->
+    <section id="destinations" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">Tempat berlibur bernilai tinggi di Depok</h2>
+                <p class="text-gray-500 text-base">Tamu setuju: penginapan ini dinilai tinggi karena lokasi, kebersihan, dan lainnya.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&q=80" alt="Villa" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-3 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-sm leading-snug">Rumah di Jakarta Selatan</h3>
+                            <div class="flex items-center space-x-1 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.98</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3">Jakarta Selatan, Indonesia</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 450.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80" alt="Apartment" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-3 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-sm leading-snug">Apartemen Kecamatan Se...</h3>
+                            <div class="flex items-center space-x-1 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.99</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3">Depok, Jawa Barat</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 376.359</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&q=80" alt="House" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-3 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-sm leading-snug">Rumah di Kecamatan Cinere</h3>
+                            <div class="flex items-center space-x-1 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.98</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3">Cinere, Depok, Jawa Barat</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 420.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80" alt="Townhouse" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-3 py-1 rounded-full shadow-sm">HosTeladan</span>
+                        <button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-sm leading-snug">Townhouse di Limo</h3>
+                            <div class="flex items-center space-x-1 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.95</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3">Limo, Depok, Jawa Barat</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 395.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== POPULAR FACILITIES ===== -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">Fasilitas populer untuk tempat berlibur di Depok</h2>
+                <p class="text-gray-500">Fasilitas yang paling sering dicari para tamu</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="facility-card bg-white border border-gray-200 rounded-2xl p-6 flex flex-col items-center cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style="background-color:#FFF0F3">
+                        <i class="fa-solid fa-utensils text-2xl" style="color:#FF385C"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-700">Dapur</span>
+                </div>
+                <div class="facility-card bg-white border border-gray-200 rounded-2xl p-6 flex flex-col items-center cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style="background-color:#FFF0F3">
+                        <i class="fa-solid fa-wifi text-2xl" style="color:#FF385C"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-700">Wifi</span>
+                </div>
+                <div class="facility-card bg-white border border-gray-200 rounded-2xl p-6 flex flex-col items-center cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style="background-color:#FFF0F3">
+                        <i class="fa-solid fa-person-swimming text-2xl" style="color:#FF385C"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-700">Kolam renang</span>
+                </div>
+                <div class="facility-card bg-white border border-gray-200 rounded-2xl p-6 flex flex-col items-center cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style="background-color:#FFF0F3">
+                        <i class="fa-solid fa-square-parking text-2xl" style="color:#FF385C"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-700 text-center">Parkir gratis di properti</span>
+                </div>
+                <div class="facility-card bg-white border border-gray-200 rounded-2xl p-6 flex flex-col items-center cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style="background-color:#FFF0F3">
+                        <i class="fa-solid fa-snowflake text-2xl" style="color:#FF385C"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-700">AC</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEARBY ATTRACTIONS ===== -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">Menginap di dekat tempat-tempat terpopuler di Depok</h2>
+                <p class="text-gray-500">Dekat destinasi wisata favorit warga lokal</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg hover:border-rose-200 transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-building text-lg" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-rose-500 transition-colors">Trans Studio Mall Cibubur</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">14 warga lokal merekomendasikannya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg hover:border-rose-200 transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-bag-shopping text-lg" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-rose-500 transition-colors">Cibubur Junction</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">14 warga lokal merekomendasikannya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg hover:border-rose-200 transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-paw text-lg" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-rose-500 transition-colors">Ragunan Zoo</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">66 warga lokal merekomendasikannya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg hover:border-rose-200 transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-store text-lg" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-rose-500 transition-colors">One Belpark</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">17 warga lokal merekomendasikannya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg hover:border-rose-200 transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-city text-lg" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-rose-500 transition-colors">Margo City</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">25 warga lokal merekomendasikannya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-2xl p-5 hover:shadow-lg hover:border-rose-200 transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-mosque text-lg" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 text-sm group-hover:text-rose-500 transition-colors">Dian Al-Mahri Mosque</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">12 warga lokal merekomendasikannya</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MORE STAYS ===== -->
+    <section id="stays" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">Tempat berlibur menarik lainnya di Depok</h2>
+                <p class="text-gray-500">Eksplorasi lebih banyak pilihan penginapan berkualitas</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Property 1 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Rumah di Kec. Jatisampurna</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.93</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Bekasi, Jawa Barat</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 320.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Property 2 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Apartemen Cinere Resort</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Cinere, Depok</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 376.359</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Property 3 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Apartemen Kec. Cinere</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">5.0</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Depok, Jawa Barat</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 285.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Property 4 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Apartemen Kec. Beji</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.93</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Beji, Depok</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 350.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Property 5 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Apartemen Jakarta Selatan</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">5.0</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Jakarta Selatan</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 410.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Property 6 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">HosTeladan</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Rumah Jakarta Selatan</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.75</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Jakarta Selatan</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 376.359</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Property 7 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Apartemen Kec. Beji</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">4.6</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Beji, Depok</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 295.000</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+
+                <!-- Property 8 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=500&q=80" alt="Property" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-white text-xs font-bold text-gray-700 px-2.5 py-1 rounded-full shadow-sm">Pilihan Tamu</span>
+                        <button class="absolute top-3 right-3 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow hover:scale-110 transition-transform">
+                            <i class="fa-regular fa-heart text-gray-400 text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between gap-1 mb-1">
+                            <h3 class="font-semibold text-gray-800 text-xs leading-snug">Rumah Kec. Pamulang</h3>
+                            <div class="flex items-center space-x-0.5 flex-shrink-0">
+                                <i class="fa-solid fa-star text-xs" style="color:#FF385C"></i>
+                                <span class="text-xs font-bold text-gray-700">5.0</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Pamulang, Tangerang Selatan</p>
+                        <p class="text-sm"><span class="font-bold text-gray-900">Rp 376.359</span><span class="text-gray-400 text-xs"> / malam</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BEST TIME TO VISIT ===== -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">Kapan waktu terbaik untuk berkunjung ke Depok?</h2>
+                <p class="text-gray-500">Rencanakan perjalanan Anda dengan data harga dan cuaca terbaik</p>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl shadow-sm border border-gray-200">
+                <table class="w-full text-sm min-w-[600px]">
+                    <thead>
+                        <tr class="bg-gray-50 border-b border-gray-200">
+                            <th class="text-left px-6 py-4 font-semibold text-gray-500 text-xs uppercase tracking-wide">Bulan</th>
+                            <th class="text-center px-6 py-4 font-semibold text-gray-500 text-xs uppercase tracking-wide">Harga rata-rata</th>
+                            <th class="text-center px-6 py-4 font-semibold text-gray-500 text-xs uppercase tracking-wide">Suhu rata-rata</th>
+                            <th class="text-center px-6 py-4 font-semibold text-gray-500 text-xs uppercase tracking-wide">Musim</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Januari</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">28°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">Hujan</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Februari</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">28°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">Hujan</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Maret</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-emerald-50 text-emerald-600 text-xs font-semibold px-3 py-1 rounded-full">Cerah</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">April</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 358.437</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-emerald-50 text-emerald-600 text-xs font-semibold px-3 py-1 rounded-full">Cerah</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Mei</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">30°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-amber-50 text-amber-600 text-xs font-semibold px-3 py-1 rounded-full">Panas</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Juni</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-emerald-50 text-emerald-600 text-xs font-semibold px-3 py-1 rounded-full">Cerah</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Juli</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-emerald-50 text-emerald-600 text-xs font-semibold px-3 py-1 rounded-full">Cerah</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Agustus</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-amber-50 text-amber-600 text-xs font-semibold px-3 py-1 rounded-full">Panas</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">September</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">30°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-amber-50 text-amber-600 text-xs font-semibold px-3 py-1 rounded-full">Panas</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Oktober</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-emerald-50 text-emerald-600 text-xs font-semibold px-3 py-1 rounded-full">Cerah</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">November</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">Hujan</span></td>
+                        </tr>
+                        <tr class="row-hover transition-colors duration-200">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Desember</td>
+                            <td class="px-6 py-4 text-center text-gray-600">Rp 376.359</td>
+                            <td class="px-6 py-4 text-center text-gray-600">29°C</td>
+                            <td class="px-6 py-4 text-center"><span class="bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">Hujan</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATISTICS ===== -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">Statistik cepat tentang sewa tempat liburan di Depok</h2>
+                <p class="text-gray-500">Data terpercaya untuk membantu keputusan Anda</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Stat 1 -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-house-chimney text-xl" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-extrabold text-gray-900 mb-1">1,060</p>
+                            <p class="text-sm font-bold text-gray-700 mb-1">Total sewa tempat liburan</p>
+                            <p class="text-xs text-gray-400 leading-relaxed">Temukan 1,060 sewa tempat liburan di Depok</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-comment-dots text-xl" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-extrabold text-gray-900 mb-1">3,890</p>
+                            <p class="text-sm font-bold text-gray-700 mb-1">Ulasan tamu terverifikasi</p>
+                            <p class="text-xs text-gray-400 leading-relaxed">Lebih dari 3,890 ulasan terverifikasi dari tamu nyata</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-users text-xl" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-extrabold text-gray-900 mb-1">210</p>
+                            <p class="text-sm font-bold text-gray-700 mb-1">Sewa tempat liburan yang cocok untuk keluarga</p>
+                            <p class="text-xs text-gray-400 leading-relaxed">210 properti menawarkan ruang ekstra & fasilitas ramah anak</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-paw text-xl" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-extrabold text-gray-900 mb-1">80</p>
+                            <p class="text-sm font-bold text-gray-700 mb-1">Sewa tempat liburan ramah hewan peliharaan</p>
+                            <p class="text-xs text-gray-400 leading-relaxed">Temukan 80 penginapan yang menyambut hewan peliharaan Anda</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat 5 -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-person-swimming text-xl" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-extrabold text-gray-900 mb-1">400</p>
+                            <p class="text-sm font-bold text-gray-700 mb-1">Sewa tempat liburan yang dilengkapi kolam renang</p>
+                            <p class="text-xs text-gray-400 leading-relaxed">400 properti dilengkapi kolam renang pribadi atau bersama</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat 6 -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background-color:#FFF0F3">
+                            <i class="fa-solid fa-star text-xl" style="color:#FF385C"></i>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-extrabold text-gray-900 mb-1">4.6</p>
+                            <p class="text-sm font-bold text-gray-700 mb-1">Nilai rata-rata</p>
+                            <p class="text-xs text-gray-400 leading-relaxed">Tamu di Depok mendapatkan nilai rata-rata 4.6 dari 5 dari tamu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXPLORE DESTINATIONS ===== -->
+    <section id="experiences" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">Destinasi untuk dijelajahi</h2>
+                <p class="text-gray-500 mb-8">Temukan pengalaman menginap terbaik di kota-kota Indonesia</p>
+                <!-- Tabs -->
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button onclick="setTab(this)" class="tab-btn active text-xs font-semibold px-4 py-2 rounded-full transition-all border border-transparent">Destinasi di sekitar</button>
+                    <button onclick="setTab(this)" class="tab-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all">Tipe penginapannya</button>
+                    <button onclick="setTab(this)" class="tab-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all">Perbandingan</button>
+                    <button onclick="setTab(this)" class="tab-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all">Panduan di Sekitar</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                <!-- Jakarta -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1555899434-94d1368aa7af?w=150&q=80" alt="Jakarta" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Jakarta</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Bandung -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1598981457915-aea220950616?w=150&q=80" alt="Bandung" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Bandung</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Bogor -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=150&q=80" alt="Bogor" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Bogor</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Tangerang -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=150&q=80" alt="Tangerang" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Tangerang</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Yogyakarta -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1579227114347-15d08fc37cae?w=150&q=80" alt="Yogyakarta" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Yogyakarta</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Sukabumi -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?w=150&q=80" alt="Sukabumi" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Sukabumi</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Jakarta Timur -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=150&q=80" alt="Jakarta Timur" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Jakarta Timur</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Tangerang Selatan -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=150&q=80" alt="Tangerang Selatan" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Tangerang Selatan</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Jakarta Selatan -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=150&q=80" alt="Jakarta Selatan" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Jakarta Selatan</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+
+                <!-- Bali -->
+                <a href="#" class="dest-card group text-center p-4 rounded-2xl hover:bg-rose-50 transition-all duration-300 cursor-pointer">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden shadow-sm ring-2 ring-transparent group-hover:ring-rose-200 transition-all">
+                        <img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf4?w=150&q=80" alt="Bali" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-gray-800 group-hover:text-rose-500 transition-colors text-sm">Bali</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Sewa tempat liburan</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="contact" class="bg-gray-50 border-t border-gray-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Footer Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-gray-200">
+
+                <!-- Brand -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 2C16 2 6 11.5 6 18.5C6 23.2 10.5 27 16 27C21.5 27 26 23.2 26 18.5C26 11.5 16 2 16 2Z" fill="#FF385C"/>
+                            <circle cx="16" cy="18" r="4" fill="white"/>
+                        </svg>
+                        <span class="text-xl font-bold" style="color:#FF385C">StayFinder</span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-5">Platform terpercaya untuk menemukan penginapan unik dan berkesan di seluruh Indonesia.</p>
+                    <!-- Social Media -->
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-200 hover:bg-rose-500 transition-colors group">
+                            <i class="fa-brands fa-facebook-f text-sm text-gray-600 group-hover:text-white transition-colors"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-200 hover:bg-rose-500 transition-colors group">
+                            <i class="fa-brands fa-instagram text-sm text-gray-600 group-hover:text-white transition-colors"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-200 hover:bg-rose-500 transition-colors group">
+                            <i class="fa-brands fa-x-twitter text-sm text-gray-600 group-hover:text-white transition-colors"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-200 hover:bg-rose-500 transition-colors group">
+                            <i class="fa-brands fa-youtube text-sm text-gray-600 group-hover:text-white transition-colors"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-5 text-sm uppercase tracking-wide">About</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Press & News</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Investors</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Partner Program</a></li>
+                    </ul>
+                </div>
+
+                <!-- Help Center -->
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-5 text-sm uppercase tracking-wide">Help Center</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">How It Works</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">FAQs</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Contact Support</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Host Resources</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Safety Information</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-5 text-sm uppercase tracking-wide">Legal</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Cookie Policy</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Sitemap</a></li>
+                        <li><a href="#" class="text-sm text-gray-500 hover:text-rose-500 transition-colors">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-sm text-gray-400">© 2026 StayFinder. All rights reserved.</p>
+                <div class="flex items-center space-x-1.5 text-sm text-gray-400 cursor-pointer hover:text-gray-600 transition-colors">
+                    <i class="fa-solid fa-globe text-xs"></i>
+                    <span>Indonesia (IDR)</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+        function closeMenu() {
+            document.getElementById('mobile-menu').classList.remove('open');
+        }
+
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-md');
+                nav.classList.remove('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.add('shadow-sm');
+            }
+        });
+
+        // Destination tabs
+        function setTab(btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active', 'text-white');
+                b.classList.add('bg-gray-100', 'text-gray-600');
+                b.style.backgroundColor = '';
+                b.style.color = '';
+            });
+            btn.classList.add('active');
+            btn.classList.remove('bg-gray-100', 'text-gray-600');
+            btn.style.backgroundColor = '#FF385C';
+            btn.style.color = 'white';
+        }
+
+        // Init first tab
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstTab = document.querySelector('.tab-btn.active');
+            if (firstTab) {
+                firstTab.style.backgroundColor = '#FF385C';
+                firstTab.style.color = 'white';
+            }
+        });
+
+        // Smooth anchor scroll offset for fixed navbar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 72;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
