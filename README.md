@@ -178,8 +178,4 @@ Desktop  (lg:)      : ≥ 1024px   → 4–5 kolom
 
 <div align="center">
 
-Dibuat dengan ❤️ sebagai proyek pembelajaran Tailwind CSS
-
-⭐ **Beri bintang jika proyek ini membantumu belajar!** ⭐
-
 </div>
